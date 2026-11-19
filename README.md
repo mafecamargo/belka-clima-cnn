@@ -4,6 +4,15 @@ Olhar longe. Proteger perto.
 
 Dashboard interativo que (1) usa uma rede neural convolucional (CNN) para dizer qual evento climático aparece em uma imagem, (2) consulta em tempo real os avisos e a previsão do INMET para uma cidade e (3) mostra as precauções para cada evento.
 
+## Integrantes:
+- Fernanda Kaory Saito RM551104
+- João Pedro Borsato da Cruz RM550294
+- Maria Fernanda Vieira de Camargo RM97956
+- Pedro Lucas de Andrade Nunes RM550366
+
+## Link da demonstração no YouTube: 
+
+
 ## O que tem na pasta
 
 | Caminho | O que é |
