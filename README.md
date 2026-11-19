@@ -11,7 +11,7 @@ Dashboard interativo que (1) usa uma rede neural convolucional (CNN) para dizer 
 - Pedro Lucas de Andrade Nunes RM550366
 
 ## Link da demonstração no YouTube: 
-
+https://youtu.be/4pXY3EiQ0ro 
 
 ## O que tem na pasta
 
