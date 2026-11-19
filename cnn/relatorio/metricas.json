@@ -1,0 +1,1104 @@
+{
+ "nome": "BelkaNet",
+ "treinado_em": "2026-11-16 01:10 UTC",
+ "classes": [
+  "deslizamento",
+  "enchente",
+  "incendio",
+  "neve",
+  "seca",
+  "tempestade"
+ ],
+ "tam": 64,
+ "tam_base": 72,
+ "canais": [
+  16,
+  32,
+  64,
+  96
+ ],
+ "media": [
+  0.5063269734382629,
+  0.4727754294872284,
+  0.43499791622161865
+ ],
+ "desvio": [
+  0.23222941160202026,
+  0.2262563407421112,
+  0.24980515241622925
+ ],
+ "parametros": 79558,
+ "imagens": {
+  "total": 1546,
+  "treino": 1238,
+  "validacao": 154,
+  "teste": 154,
+  "por_classe": {
+   "deslizamento": 400,
+   "enchente": 400,
+   "incendio": 329,
+   "neve": 93,
+   "seca": 282,
+   "tempestade": 42
+  }
+ },
+ "epocas": 120,
+ "melhor_epoca": 52,
+ "acc_validacao": 0.7662,
+ "teste": {
+  "acuracia": 0.6623,
+  "macro_precisao": 0.6141,
+  "macro_recall": 0.61,
+  "macro_f1": 0.612,
+  "por_classe": {
+   "deslizamento": {
+    "precisao": 0.5789,
+    "recall": 0.55,
+    "f1": 0.5641,
+    "n": 40
+   },
+   "enchente": {
+    "precisao": 0.5333,
+    "recall": 0.6,
+    "f1": 0.5647,
+    "n": 40
+   },
+   "incendio": {
+    "precisao": 0.8529,
+    "recall": 0.8788,
+    "f1": 0.8657,
+    "n": 33
+   },
+   "neve": {
+    "precisao": 0.6,
+    "recall": 0.6667,
+    "f1": 0.6316,
+    "n": 9
+   },
+   "seca": {
+    "precisao": 0.8696,
+    "recall": 0.7143,
+    "f1": 0.7843,
+    "n": 28
+   },
+   "tempestade": {
+    "precisao": 0.25,
+    "recall": 0.25,
+    "f1": 0.25,
+    "n": 4
+   }
+  },
+  "matriz_confusao": [
+   [
+    22,
+    16,
+    2,
+    0,
+    0,
+    0
+   ],
+   [
+    12,
+    24,
+    0,
+    2,
+    1,
+    1
+   ],
+   [
+    0,
+    0,
+    29,
+    2,
+    0,
+    2
+   ],
+   [
+    1,
+    0,
+    0,
+    6,
+    2,
+    0
+   ],
+   [
+    3,
+    5,
+    0,
+    0,
+    20,
+    0
+   ],
+   [
+    0,
+    0,
+    3,
+    0,
+    0,
+    1
+   ]
+  ]
+ },
+ "historico": [
+  {
+   "epoca": 1,
+   "perda_treino": 1.7103,
+   "acc_treino": 0.2633,
+   "perda_val": 1.363,
+   "acc_val": 0.3766,
+   "lr": 0.001
+  },
+  {
+   "epoca": 2,
+   "perda_treino": 1.4394,
+   "acc_treino": 0.37,
+   "perda_val": 1.2205,
+   "acc_val": 0.4286,
+   "lr": 0.001
+  },
+  {
+   "epoca": 3,
+   "perda_treino": 1.3044,
+   "acc_treino": 0.4208,
+   "perda_val": 1.0993,
+   "acc_val": 0.4416,
+   "lr": 0.001
+  },
+  {
+   "epoca": 4,
+   "perda_treino": 1.2112,
+   "acc_treino": 0.4653,
+   "perda_val": 1.0885,
+   "acc_val": 0.4805,
+   "lr": 0.001
+  },
+  {
+   "epoca": 5,
+   "perda_treino": 1.1863,
+   "acc_treino": 0.4701,
+   "perda_val": 1.0822,
+   "acc_val": 0.5065,
+   "lr": 0.001
+  },
+  {
+   "epoca": 6,
+   "perda_treino": 1.0981,
+   "acc_treino": 0.4927,
+   "perda_val": 0.9637,
+   "acc_val": 0.5325,
+   "lr": 0.001
+  },
+  {
+   "epoca": 7,
+   "perda_treino": 1.1029,
+   "acc_treino": 0.4943,
+   "perda_val": 0.9239,
+   "acc_val": 0.4935,
+   "lr": 0.001
+  },
+  {
+   "epoca": 8,
+   "perda_treino": 1.0616,
+   "acc_treino": 0.5315,
+   "perda_val": 1.0624,
+   "acc_val": 0.5325,
+   "lr": 0.001
+  },
+  {
+   "epoca": 9,
+   "perda_treino": 1.0824,
+   "acc_treino": 0.5355,
+   "perda_val": 0.9557,
+   "acc_val": 0.6234,
+   "lr": 0.001
+  },
+  {
+   "epoca": 10,
+   "perda_treino": 0.9665,
+   "acc_treino": 0.5517,
+   "perda_val": 0.8704,
+   "acc_val": 0.5584,
+   "lr": 0.001
+  },
+  {
+   "epoca": 11,
+   "perda_treino": 0.9523,
+   "acc_treino": 0.5775,
+   "perda_val": 0.8,
+   "acc_val": 0.6299,
+   "lr": 0.001
+  },
+  {
+   "epoca": 12,
+   "perda_treino": 0.9278,
+   "acc_treino": 0.5937,
+   "perda_val": 0.7934,
+   "acc_val": 0.6104,
+   "lr": 0.001
+  },
+  {
+   "epoca": 13,
+   "perda_treino": 0.8965,
+   "acc_treino": 0.6026,
+   "perda_val": 0.8225,
+   "acc_val": 0.5455,
+   "lr": 0.001
+  },
+  {
+   "epoca": 14,
+   "perda_treino": 0.8839,
+   "acc_treino": 0.6042,
+   "perda_val": 0.7464,
+   "acc_val": 0.6299,
+   "lr": 0.001
+  },
+  {
+   "epoca": 15,
+   "perda_treino": 0.8678,
+   "acc_treino": 0.5848,
+   "perda_val": 0.7105,
+   "acc_val": 0.6558,
+   "lr": 0.001
+  },
+  {
+   "epoca": 16,
+   "perda_treino": 0.832,
+   "acc_treino": 0.6228,
+   "perda_val": 0.7449,
+   "acc_val": 0.6494,
+   "lr": 0.001
+  },
+  {
+   "epoca": 17,
+   "perda_treino": 0.8446,
+   "acc_treino": 0.5977,
+   "perda_val": 0.8021,
+   "acc_val": 0.6429,
+   "lr": 0.001
+  },
+  {
+   "epoca": 18,
+   "perda_treino": 0.8153,
+   "acc_treino": 0.6309,
+   "perda_val": 0.7394,
+   "acc_val": 0.6623,
+   "lr": 0.001
+  },
+  {
+   "epoca": 19,
+   "perda_treino": 0.802,
+   "acc_treino": 0.6486,
+   "perda_val": 0.7068,
+   "acc_val": 0.6623,
+   "lr": 0.001
+  },
+  {
+   "epoca": 20,
+   "perda_treino": 0.794,
+   "acc_treino": 0.6405,
+   "perda_val": 0.6715,
+   "acc_val": 0.6818,
+   "lr": 0.001
+  },
+  {
+   "epoca": 21,
+   "perda_treino": 0.7541,
+   "acc_treino": 0.6817,
+   "perda_val": 0.6905,
+   "acc_val": 0.6948,
+   "lr": 0.001
+  },
+  {
+   "epoca": 22,
+   "perda_treino": 0.7179,
+   "acc_treino": 0.6704,
+   "perda_val": 0.6646,
+   "acc_val": 0.7013,
+   "lr": 0.001
+  },
+  {
+   "epoca": 23,
+   "perda_treino": 0.7135,
+   "acc_treino": 0.664,
+   "perda_val": 0.7086,
+   "acc_val": 0.6234,
+   "lr": 0.001
+  },
+  {
+   "epoca": 24,
+   "perda_treino": 0.7456,
+   "acc_treino": 0.6607,
+   "perda_val": 0.7024,
+   "acc_val": 0.7078,
+   "lr": 0.001
+  },
+  {
+   "epoca": 25,
+   "perda_treino": 0.7211,
+   "acc_treino": 0.668,
+   "perda_val": 0.6763,
+   "acc_val": 0.6818,
+   "lr": 0.001
+  },
+  {
+   "epoca": 26,
+   "perda_treino": 0.7095,
+   "acc_treino": 0.6567,
+   "perda_val": 0.6245,
+   "acc_val": 0.7532,
+   "lr": 0.001
+  },
+  {
+   "epoca": 27,
+   "perda_treino": 0.6858,
+   "acc_treino": 0.6801,
+   "perda_val": 0.6871,
+   "acc_val": 0.6623,
+   "lr": 0.001
+  },
+  {
+   "epoca": 28,
+   "perda_treino": 0.6897,
+   "acc_treino": 0.6922,
+   "perda_val": 0.6493,
+   "acc_val": 0.6883,
+   "lr": 0.001
+  },
+  {
+   "epoca": 29,
+   "perda_treino": 0.6619,
+   "acc_treino": 0.6801,
+   "perda_val": 0.7481,
+   "acc_val": 0.6688,
+   "lr": 0.001
+  },
+  {
+   "epoca": 30,
+   "perda_treino": 0.6625,
+   "acc_treino": 0.6971,
+   "perda_val": 0.6543,
+   "acc_val": 0.6948,
+   "lr": 0.001
+  },
+  {
+   "epoca": 31,
+   "perda_treino": 0.6419,
+   "acc_treino": 0.7092,
+   "perda_val": 0.6509,
+   "acc_val": 0.6883,
+   "lr": 0.001
+  },
+  {
+   "epoca": 32,
+   "perda_treino": 0.6157,
+   "acc_treino": 0.7141,
+   "perda_val": 0.6166,
+   "acc_val": 0.7403,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 33,
+   "perda_treino": 0.6,
+   "acc_treino": 0.7205,
+   "perda_val": 0.6587,
+   "acc_val": 0.6429,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 34,
+   "perda_treino": 0.5793,
+   "acc_treino": 0.7302,
+   "perda_val": 0.6291,
+   "acc_val": 0.7208,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 35,
+   "perda_treino": 0.5737,
+   "acc_treino": 0.7391,
+   "perda_val": 0.6269,
+   "acc_val": 0.7273,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 36,
+   "perda_treino": 0.5942,
+   "acc_treino": 0.7391,
+   "perda_val": 0.6158,
+   "acc_val": 0.6948,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 37,
+   "perda_treino": 0.5819,
+   "acc_treino": 0.7342,
+   "perda_val": 0.6252,
+   "acc_val": 0.7208,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 38,
+   "perda_treino": 0.5475,
+   "acc_treino": 0.7431,
+   "perda_val": 0.6121,
+   "acc_val": 0.7273,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 39,
+   "perda_treino": 0.563,
+   "acc_treino": 0.7464,
+   "perda_val": 0.6213,
+   "acc_val": 0.7208,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 40,
+   "perda_treino": 0.5645,
+   "acc_treino": 0.7254,
+   "perda_val": 0.6255,
+   "acc_val": 0.7013,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 41,
+   "perda_treino": 0.561,
+   "acc_treino": 0.7375,
+   "perda_val": 0.6076,
+   "acc_val": 0.7013,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 42,
+   "perda_treino": 0.5475,
+   "acc_treino": 0.7407,
+   "perda_val": 0.6023,
+   "acc_val": 0.7208,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 43,
+   "perda_treino": 0.5248,
+   "acc_treino": 0.7528,
+   "perda_val": 0.6307,
+   "acc_val": 0.7208,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 44,
+   "perda_treino": 0.5291,
+   "acc_treino": 0.7488,
+   "perda_val": 0.6298,
+   "acc_val": 0.7078,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 45,
+   "perda_treino": 0.5472,
+   "acc_treino": 0.7536,
+   "perda_val": 0.5944,
+   "acc_val": 0.7338,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 46,
+   "perda_treino": 0.5211,
+   "acc_treino": 0.7553,
+   "perda_val": 0.6383,
+   "acc_val": 0.7013,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 47,
+   "perda_treino": 0.5299,
+   "acc_treino": 0.7504,
+   "perda_val": 0.623,
+   "acc_val": 0.6948,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 48,
+   "perda_treino": 0.4927,
+   "acc_treino": 0.7706,
+   "perda_val": 0.6146,
+   "acc_val": 0.7468,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 49,
+   "perda_treino": 0.5116,
+   "acc_treino": 0.7544,
+   "perda_val": 0.6274,
+   "acc_val": 0.7208,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 50,
+   "perda_treino": 0.5234,
+   "acc_treino": 0.752,
+   "perda_val": 0.5721,
+   "acc_val": 0.7597,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 51,
+   "perda_treino": 0.5064,
+   "acc_treino": 0.752,
+   "perda_val": 0.6234,
+   "acc_val": 0.7468,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 52,
+   "perda_treino": 0.5026,
+   "acc_treino": 0.7601,
+   "perda_val": 0.5877,
+   "acc_val": 0.7662,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 53,
+   "perda_treino": 0.4646,
+   "acc_treino": 0.7738,
+   "perda_val": 0.6078,
+   "acc_val": 0.7208,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 54,
+   "perda_treino": 0.4804,
+   "acc_treino": 0.7625,
+   "perda_val": 0.6282,
+   "acc_val": 0.7273,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 55,
+   "perda_treino": 0.504,
+   "acc_treino": 0.7771,
+   "perda_val": 0.6037,
+   "acc_val": 0.7468,
+   "lr": 0.0005
+  },
+  {
+   "epoca": 56,
+   "perda_treino": 0.4535,
+   "acc_treino": 0.7811,
+   "perda_val": 0.5791,
+   "acc_val": 0.7468,
+   "lr": 0.00025
+  },
+  {
+   "epoca": 57,
+   "perda_treino": 0.4585,
+   "acc_treino": 0.7779,
+   "perda_val": 0.5844,
+   "acc_val": 0.7468,
+   "lr": 0.00025
+  },
+  {
+   "epoca": 58,
+   "perda_treino": 0.4443,
+   "acc_treino": 0.7835,
+   "perda_val": 0.5979,
+   "acc_val": 0.7468,
+   "lr": 0.00025
+  },
+  {
+   "epoca": 59,
+   "perda_treino": 0.4467,
+   "acc_treino": 0.7859,
+   "perda_val": 0.6036,
+   "acc_val": 0.7662,
+   "lr": 0.00025
+  },
+  {
+   "epoca": 60,
+   "perda_treino": 0.4359,
+   "acc_treino": 0.7843,
+   "perda_val": 0.6159,
+   "acc_val": 0.7532,
+   "lr": 0.00025
+  },
+  {
+   "epoca": 61,
+   "perda_treino": 0.4279,
+   "acc_treino": 0.8045,
+   "perda_val": 0.5987,
+   "acc_val": 0.7338,
+   "lr": 0.000125
+  },
+  {
+   "epoca": 62,
+   "perda_treino": 0.4225,
+   "acc_treino": 0.7997,
+   "perda_val": 0.5953,
+   "acc_val": 0.7403,
+   "lr": 0.000125
+  },
+  {
+   "epoca": 63,
+   "perda_treino": 0.4097,
+   "acc_treino": 0.8021,
+   "perda_val": 0.5975,
+   "acc_val": 0.7403,
+   "lr": 0.000125
+  },
+  {
+   "epoca": 64,
+   "perda_treino": 0.4166,
+   "acc_treino": 0.7973,
+   "perda_val": 0.5924,
+   "acc_val": 0.7468,
+   "lr": 0.000125
+  },
+  {
+   "epoca": 65,
+   "perda_treino": 0.4327,
+   "acc_treino": 0.7973,
+   "perda_val": 0.5939,
+   "acc_val": 0.7468,
+   "lr": 0.000125
+  },
+  {
+   "epoca": 66,
+   "perda_treino": 0.414,
+   "acc_treino": 0.8013,
+   "perda_val": 0.5932,
+   "acc_val": 0.7468,
+   "lr": 6.25e-05
+  },
+  {
+   "epoca": 67,
+   "perda_treino": 0.4174,
+   "acc_treino": 0.8086,
+   "perda_val": 0.6069,
+   "acc_val": 0.7403,
+   "lr": 6.25e-05
+  },
+  {
+   "epoca": 68,
+   "perda_treino": 0.4135,
+   "acc_treino": 0.7964,
+   "perda_val": 0.5975,
+   "acc_val": 0.7468,
+   "lr": 6.25e-05
+  },
+  {
+   "epoca": 69,
+   "perda_treino": 0.4035,
+   "acc_treino": 0.8118,
+   "perda_val": 0.5956,
+   "acc_val": 0.7338,
+   "lr": 6.25e-05
+  },
+  {
+   "epoca": 70,
+   "perda_treino": 0.3963,
+   "acc_treino": 0.8118,
+   "perda_val": 0.6043,
+   "acc_val": 0.7403,
+   "lr": 6.25e-05
+  },
+  {
+   "epoca": 71,
+   "perda_treino": 0.399,
+   "acc_treino": 0.811,
+   "perda_val": 0.6009,
+   "acc_val": 0.7403,
+   "lr": 3.125e-05
+  },
+  {
+   "epoca": 72,
+   "perda_treino": 0.3899,
+   "acc_treino": 0.8183,
+   "perda_val": 0.5983,
+   "acc_val": 0.7403,
+   "lr": 3.125e-05
+  },
+  {
+   "epoca": 73,
+   "perda_treino": 0.4075,
+   "acc_treino": 0.8142,
+   "perda_val": 0.6046,
+   "acc_val": 0.7468,
+   "lr": 3.125e-05
+  },
+  {
+   "epoca": 74,
+   "perda_treino": 0.4261,
+   "acc_treino": 0.8086,
+   "perda_val": 0.6024,
+   "acc_val": 0.7403,
+   "lr": 3.125e-05
+  },
+  {
+   "epoca": 75,
+   "perda_treino": 0.4147,
+   "acc_treino": 0.7989,
+   "perda_val": 0.5955,
+   "acc_val": 0.7403,
+   "lr": 3.125e-05
+  },
+  {
+   "epoca": 76,
+   "perda_treino": 0.4007,
+   "acc_treino": 0.815,
+   "perda_val": 0.597,
+   "acc_val": 0.7338,
+   "lr": 1.5625e-05
+  },
+  {
+   "epoca": 77,
+   "perda_treino": 0.4086,
+   "acc_treino": 0.8037,
+   "perda_val": 0.5965,
+   "acc_val": 0.7403,
+   "lr": 1.5625e-05
+  },
+  {
+   "epoca": 78,
+   "perda_treino": 0.4036,
+   "acc_treino": 0.815,
+   "perda_val": 0.5956,
+   "acc_val": 0.7403,
+   "lr": 1.5625e-05
+  },
+  {
+   "epoca": 79,
+   "perda_treino": 0.3969,
+   "acc_treino": 0.8094,
+   "perda_val": 0.5967,
+   "acc_val": 0.7468,
+   "lr": 1.5625e-05
+  },
+  {
+   "epoca": 80,
+   "perda_treino": 0.4098,
+   "acc_treino": 0.8053,
+   "perda_val": 0.5939,
+   "acc_val": 0.7468,
+   "lr": 1.5625e-05
+  },
+  {
+   "epoca": 81,
+   "perda_treino": 0.4031,
+   "acc_treino": 0.8094,
+   "perda_val": 0.5943,
+   "acc_val": 0.7468,
+   "lr": 7.8125e-06
+  },
+  {
+   "epoca": 82,
+   "perda_treino": 0.3992,
+   "acc_treino": 0.8029,
+   "perda_val": 0.5938,
+   "acc_val": 0.7468,
+   "lr": 7.8125e-06
+  },
+  {
+   "epoca": 83,
+   "perda_treino": 0.4069,
+   "acc_treino": 0.8029,
+   "perda_val": 0.5946,
+   "acc_val": 0.7468,
+   "lr": 7.8125e-06
+  },
+  {
+   "epoca": 84,
+   "perda_treino": 0.3863,
+   "acc_treino": 0.8279,
+   "perda_val": 0.5941,
+   "acc_val": 0.7468,
+   "lr": 7.8125e-06
+  },
+  {
+   "epoca": 85,
+   "perda_treino": 0.3964,
+   "acc_treino": 0.811,
+   "perda_val": 0.5951,
+   "acc_val": 0.7468,
+   "lr": 7.8125e-06
+  },
+  {
+   "epoca": 86,
+   "perda_treino": 0.3797,
+   "acc_treino": 0.8191,
+   "perda_val": 0.5958,
+   "acc_val": 0.7403,
+   "lr": 3.90625e-06
+  },
+  {
+   "epoca": 87,
+   "perda_treino": 0.397,
+   "acc_treino": 0.8191,
+   "perda_val": 0.5962,
+   "acc_val": 0.7403,
+   "lr": 3.90625e-06
+  },
+  {
+   "epoca": 88,
+   "perda_treino": 0.413,
+   "acc_treino": 0.8078,
+   "perda_val": 0.5966,
+   "acc_val": 0.7403,
+   "lr": 3.90625e-06
+  },
+  {
+   "epoca": 89,
+   "perda_treino": 0.3826,
+   "acc_treino": 0.8142,
+   "perda_val": 0.5963,
+   "acc_val": 0.7403,
+   "lr": 3.90625e-06
+  },
+  {
+   "epoca": 90,
+   "perda_treino": 0.3899,
+   "acc_treino": 0.8134,
+   "perda_val": 0.5956,
+   "acc_val": 0.7468,
+   "lr": 3.90625e-06
+  },
+  {
+   "epoca": 91,
+   "perda_treino": 0.4067,
+   "acc_treino": 0.8174,
+   "perda_val": 0.5953,
+   "acc_val": 0.7468,
+   "lr": 1.953125e-06
+  },
+  {
+   "epoca": 92,
+   "perda_treino": 0.4147,
+   "acc_treino": 0.8069,
+   "perda_val": 0.5949,
+   "acc_val": 0.7468,
+   "lr": 1.953125e-06
+  },
+  {
+   "epoca": 93,
+   "perda_treino": 0.3957,
+   "acc_treino": 0.815,
+   "perda_val": 0.5947,
+   "acc_val": 0.7468,
+   "lr": 1.953125e-06
+  },
+  {
+   "epoca": 94,
+   "perda_treino": 0.4062,
+   "acc_treino": 0.8118,
+   "perda_val": 0.5947,
+   "acc_val": 0.7468,
+   "lr": 1.953125e-06
+  },
+  {
+   "epoca": 95,
+   "perda_treino": 0.397,
+   "acc_treino": 0.8118,
+   "perda_val": 0.5944,
+   "acc_val": 0.7468,
+   "lr": 1.953125e-06
+  },
+  {
+   "epoca": 96,
+   "perda_treino": 0.3924,
+   "acc_treino": 0.8078,
+   "perda_val": 0.5944,
+   "acc_val": 0.7468,
+   "lr": 9.765625e-07
+  },
+  {
+   "epoca": 97,
+   "perda_treino": 0.394,
+   "acc_treino": 0.8086,
+   "perda_val": 0.5945,
+   "acc_val": 0.7468,
+   "lr": 9.765625e-07
+  },
+  {
+   "epoca": 98,
+   "perda_treino": 0.4061,
+   "acc_treino": 0.8078,
+   "perda_val": 0.5943,
+   "acc_val": 0.7468,
+   "lr": 9.765625e-07
+  },
+  {
+   "epoca": 99,
+   "perda_treino": 0.4049,
+   "acc_treino": 0.8102,
+   "perda_val": 0.5943,
+   "acc_val": 0.7468,
+   "lr": 9.765625e-07
+  },
+  {
+   "epoca": 100,
+   "perda_treino": 0.3801,
+   "acc_treino": 0.8183,
+   "perda_val": 0.5941,
+   "acc_val": 0.7468,
+   "lr": 9.765625e-07
+  },
+  {
+   "epoca": 101,
+   "perda_treino": 0.3852,
+   "acc_treino": 0.8118,
+   "perda_val": 0.5941,
+   "acc_val": 0.7468,
+   "lr": 4.8828125e-07
+  },
+  {
+   "epoca": 102,
+   "perda_treino": 0.4092,
+   "acc_treino": 0.8094,
+   "perda_val": 0.5941,
+   "acc_val": 0.7468,
+   "lr": 4.8828125e-07
+  },
+  {
+   "epoca": 103,
+   "perda_treino": 0.3788,
+   "acc_treino": 0.811,
+   "perda_val": 0.594,
+   "acc_val": 0.7468,
+   "lr": 4.8828125e-07
+  },
+  {
+   "epoca": 104,
+   "perda_treino": 0.4147,
+   "acc_treino": 0.7989,
+   "perda_val": 0.594,
+   "acc_val": 0.7468,
+   "lr": 4.8828125e-07
+  },
+  {
+   "epoca": 105,
+   "perda_treino": 0.3923,
+   "acc_treino": 0.8094,
+   "perda_val": 0.5939,
+   "acc_val": 0.7468,
+   "lr": 4.8828125e-07
+  },
+  {
+   "epoca": 106,
+   "perda_treino": 0.4027,
+   "acc_treino": 0.8118,
+   "perda_val": 0.5939,
+   "acc_val": 0.7468,
+   "lr": 2.44140625e-07
+  },
+  {
+   "epoca": 107,
+   "perda_treino": 0.3879,
+   "acc_treino": 0.8271,
+   "perda_val": 0.5939,
+   "acc_val": 0.7468,
+   "lr": 2.44140625e-07
+  },
+  {
+   "epoca": 108,
+   "perda_treino": 0.405,
+   "acc_treino": 0.811,
+   "perda_val": 0.5939,
+   "acc_val": 0.7468,
+   "lr": 2.44140625e-07
+  },
+  {
+   "epoca": 109,
+   "perda_treino": 0.3972,
+   "acc_treino": 0.811,
+   "perda_val": 0.5939,
+   "acc_val": 0.7468,
+   "lr": 2.44140625e-07
+  },
+  {
+   "epoca": 110,
+   "perda_treino": 0.4036,
+   "acc_treino": 0.8118,
+   "perda_val": 0.5939,
+   "acc_val": 0.7468,
+   "lr": 2.44140625e-07
+  },
+  {
+   "epoca": 111,
+   "perda_treino": 0.4013,
+   "acc_treino": 0.811,
+   "perda_val": 0.5939,
+   "acc_val": 0.7468,
+   "lr": 1.220703125e-07
+  },
+  {
+   "epoca": 112,
+   "perda_treino": 0.4102,
+   "acc_treino": 0.8021,
+   "perda_val": 0.5939,
+   "acc_val": 0.7468,
+   "lr": 1.220703125e-07
+  },
+  {
+   "epoca": 113,
+   "perda_treino": 0.4051,
+   "acc_treino": 0.8029,
+   "perda_val": 0.5938,
+   "acc_val": 0.7468,
+   "lr": 1.220703125e-07
+  },
+  {
+   "epoca": 114,
+   "perda_treino": 0.3879,
+   "acc_treino": 0.8215,
+   "perda_val": 0.5938,
+   "acc_val": 0.7468,
+   "lr": 1.220703125e-07
+  },
+  {
+   "epoca": 115,
+   "perda_treino": 0.4064,
+   "acc_treino": 0.8102,
+   "perda_val": 0.5938,
+   "acc_val": 0.7468,
+   "lr": 1.220703125e-07
+  },
+  {
+   "epoca": 116,
+   "perda_treino": 0.3937,
+   "acc_treino": 0.8142,
+   "perda_val": 0.5938,
+   "acc_val": 0.7468,
+   "lr": 6.103515625e-08
+  },
+  {
+   "epoca": 117,
+   "perda_treino": 0.4123,
+   "acc_treino": 0.7973,
+   "perda_val": 0.5938,
+   "acc_val": 0.7468,
+   "lr": 6.103515625e-08
+  },
+  {
+   "epoca": 118,
+   "perda_treino": 0.3857,
+   "acc_treino": 0.8134,
+   "perda_val": 0.5938,
+   "acc_val": 0.7468,
+   "lr": 6.103515625e-08
+  },
+  {
+   "epoca": 119,
+   "perda_treino": 0.4008,
+   "acc_treino": 0.8069,
+   "perda_val": 0.5938,
+   "acc_val": 0.7468,
+   "lr": 6.103515625e-08
+  },
+  {
+   "epoca": 120,
+   "perda_treino": 0.3823,
+   "acc_treino": 0.815,
+   "perda_val": 0.5938,
+   "acc_val": 0.7468,
+   "lr": 6.103515625e-08
+  }
+ ]
+}

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Belka · Painel do clima</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --noite:#0B1B34; --branco:#F7F3EC; --ambar:#FFAA33; --azul:#2F5FD0; --ceu:#9DB8F5; --nevoa:#ECE7DE; --grafite:#1E2635;
+    --olho:#F5C518; --prepare:#F07C1B; --aja:#C81E35; --papel:#FFFDF9; --linha:#DAD3C6; --mudo:#55607A;
+    --titulo:"Space Grotesk",system-ui,sans-serif; --texto:"Atkinson Hyperlegible",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--branco);color:var(--grafite);font-family:var(--texto);font-size:17px;line-height:1.5;text-align:left}
+  h1,h2,h3{font-family:var(--titulo);color:var(--noite);margin:0;line-height:1.2}
+  h2{font-size:1.6rem;font-weight:700} h3{font-size:1.15rem;font-weight:600}
+  p{margin:0}
+  a{color:var(--azul)}
+  button,select,input{font:inherit;color:inherit}
+  :focus-visible{outline:3px solid var(--azul);outline-offset:2px}
+  .rotulo{font-family:var(--titulo);font-weight:600;font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--mudo)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+  /* cabeçalho */
+  header{background:var(--noite);color:var(--branco)}
+  .topo{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0 14px;flex-wrap:wrap}
+  .logo{display:flex;align-items:center;gap:1px;font-family:var(--titulo);font-weight:700;font-size:2rem;letter-spacing:-.02em;color:var(--branco);text-decoration:none}
+  .logo svg{height:1.34em;width:auto;margin-right:-1px}
+  .slogan{font-family:var(--titulo);font-weight:500;color:var(--ceu);font-size:1rem}
+  nav{display:flex;gap:4px;overflow-x:auto}
+  nav button{background:none;border:0;border-bottom:4px solid transparent;color:var(--ceu);font-family:var(--titulo);font-weight:600;font-size:1.05rem;padding:12px 18px 10px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:8px}
+  nav button .n{font-size:.75rem;opacity:.7}
+  nav button[aria-selected="true"]{color:var(--branco);border-bottom-color:var(--ambar)}
+  nav button:hover{color:var(--branco)}
+
+  main.wrap{padding:28px 20px 56px}
+  .aba[hidden]{display:none}
+  .intro{max-width:62ch;margin:6px 0 22px;color:var(--grafite)}
+  .cartao{background:var(--papel);border:1px solid var(--linha);border-radius:14px;padding:20px}
+  .grade{display:grid;gap:20px}
+  @media(min-width:860px){.duas{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}}
+  .btn{background:var(--azul);color:#fff;border:0;border-radius:10px;padding:11px 18px;font-family:var(--titulo);font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-decoration:none}
+  .btn:hover{background:#274fb0}
+  .btn.sec{background:transparent;color:var(--azul);border:2px solid var(--azul);padding:9px 16px}
+  .btn.sec:hover{background:#e7edfb}
+  .btn[disabled]{opacity:.55;cursor:default}
+  .mudo{color:var(--mudo)} .peq{font-size:.92rem}
+  .linha{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+
+  /* níveis de alerta: cor + ícone + nome, nunca só cor */
+  .nivel{display:inline-flex;align-items:center;gap:8px;font-family:var(--titulo);font-weight:700;font-size:.82rem;letter-spacing:.07em;text-transform:uppercase;padding:6px 12px;border-radius:999px}
+  .nivel svg{width:18px;height:18px;flex:none}
+  .nivel.fique_de_olho{background:var(--olho);color:var(--noite)}
+  .nivel.prepare_se{background:var(--prepare);color:var(--noite)}
+  .nivel.aja_agora{background:var(--aja);color:#fff}
+  .nivel.depois{background:var(--nevoa);color:var(--noite)}
+  .nivel.neutro{background:#dfe8fb;color:var(--noite)}
+
+  /* pesquisar */
+  .solta{border:2px dashed var(--azul);border-radius:14px;background:#fff;min-height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:22px;text-align:center;cursor:pointer;position:relative}
+  .solta.sobre{background:#e7edfb}
+  .solta img{max-width:100%;max-height:340px;border-radius:10px;display:block}
+  .solta input{position:absolute;inset:0;opacity:0;cursor:pointer}
+  .resultado h3{font-size:1.9rem;font-weight:700;margin:10px 0 2px}
+  .barras{display:grid;gap:9px;margin:16px 0 4px}
+  .barra{display:grid;grid-template-columns:minmax(120px,11em) 1fr 3.4em;gap:10px;align-items:center;font-size:.98rem}
+  .barra .trilho{background:var(--nevoa);border-radius:6px;height:14px;overflow:hidden}
+  .barra .cheio{background:var(--ceu);height:100%;border-radius:6px}
+  .barra.topo-1 .cheio{background:var(--azul)} .barra.topo-1{font-weight:700}
+  .barra .pc{text-align:right;font-family:var(--titulo);font-weight:600}
+  details{margin-top:20px} summary{cursor:pointer;font-family:var(--titulo);font-weight:600;color:var(--noite);padding:6px 0}
+  table{border-collapse:collapse;width:100%;font-size:.95rem}
+  th,td{padding:7px 10px;border-bottom:1px solid var(--linha);text-align:left}
+  th{font-family:var(--titulo);font-weight:600;font-size:.74rem;letter-spacing:.07em;text-transform:uppercase;color:var(--mudo)}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .rolagem{overflow-x:auto}
+  .mc td{text-align:center;min-width:44px}
+  .numeros{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:14px 0}
+  .numero{background:var(--nevoa);border-radius:10px;padding:12px 14px}
+  .numero b{display:block;font-family:var(--titulo);font-size:1.6rem;color:var(--noite);line-height:1.1}
+
+  /* tempo real */
+  .filtros{display:grid;gap:12px;grid-template-columns:1fr;align-items:end}
+  @media(min-width:720px){.filtros{grid-template-columns:150px minmax(0,1fr) minmax(0,1fr) auto}}
+  .campo label{display:block;margin-bottom:4px}
+  .campo select,.campo input{width:100%;padding:10px 12px;border:1.5px solid #b9b2a4;border-radius:10px;background:#fff;min-height:46px}
+  .status{margin:14px 0 18px;min-height:1.5em}
+  .aviso{border-left:8px solid var(--linha);margin-bottom:16px}
+  .aviso.fique_de_olho{border-left-color:var(--olho)} .aviso.prepare_se{border-left-color:var(--prepare)} .aviso.aja_agora{border-left-color:var(--aja)} .aviso.neutro{border-left-color:var(--ceu)}
+  .aviso h3{font-size:1.45rem;margin:10px 0 6px}
+  .aviso .quando{font-weight:700;font-size:1.05rem}
+  .aviso ul,.passos{margin:8px 0 0;padding-left:1.25em}
+  .aviso li,.passos li{margin:4px 0}
+  .sub{margin-top:14px}
+  .resposta{font-family:var(--titulo);font-weight:700;font-size:1.5rem;color:var(--noite);margin-bottom:14px}
+  .dias{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+  .dia{background:var(--nevoa);border-radius:10px;padding:12px}
+  .dia b{font-family:var(--titulo)} .dia .t{font-family:var(--titulo);font-weight:600;font-size:1.15rem;color:var(--noite)}
+  .agora{display:flex;gap:22px;flex-wrap:wrap}
+  .agora div b{display:block;font-family:var(--titulo);font-size:1.5rem;color:var(--noite);line-height:1.15}
+
+  /* precauções */
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}
+  .chip{border:1.5px solid var(--noite);background:transparent;color:var(--noite);border-radius:999px;padding:8px 14px;cursor:pointer;font-family:var(--titulo);font-weight:600;font-size:.95rem;display:inline-flex;align-items:center;gap:7px}
+  .chip svg{width:18px;height:18px}
+  .chip[aria-pressed="true"]{background:var(--noite);color:var(--branco)}
+  .evento{margin-bottom:20px}
+  .evento .cab{display:flex;gap:14px;align-items:flex-start;margin-bottom:6px}
+  .evento .ico{flex:none;width:46px;height:46px;border-radius:12px;background:var(--noite);color:var(--branco);display:grid;place-items:center}
+  .evento .ico svg{width:26px;height:26px}
+  .sinais{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 4px}
+  .sinais span{background:var(--nevoa);border-radius:8px;padding:4px 10px;font-size:.92rem}
+  .niveis{display:grid;gap:14px;margin-top:14px}
+  @media(min-width:860px){.niveis.varias{grid-template-columns:1fr 1fr}}
+  .bloco{border:1px solid var(--linha);border-radius:12px;padding:14px;background:#fff}
+
+  footer{background:var(--noite);color:var(--branco);padding:22px 0;font-size:.98rem}
+  footer .tel{font-family:var(--titulo);font-weight:600;font-size:1.1rem;display:flex;gap:8px 26px;flex-wrap:wrap;margin-bottom:8px}
+  footer .tel b{color:var(--ambar)}
+  footer p{color:var(--ceu);max-width:75ch}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="topo">
+      <a class="logo" href="#pesquisar" aria-label="Belka">
+        <svg viewBox="0 0 38 50" aria-hidden="true"><rect x="3" y="2" width="8" height="44" rx="1.5" fill="#F7F3EC"/><circle cx="20" cy="31" r="11.5" fill="none" stroke="#F7F3EC" stroke-width="8"/><circle cx="29.6" cy="20.4" r="7.4" fill="#0B1B34"/><circle cx="29.6" cy="20.4" r="4.6" fill="#FFAA33"/></svg><span>elka</span>
+      </a>
+      <span class="slogan">Olhar longe. Proteger perto.</span>
+    </div>
+    <nav role="tablist" aria-label="Seções do painel">
+      <button role="tab" id="tab-pesquisar" data-aba="pesquisar" aria-controls="pesquisar"><span class="n">1</span>Pesquisar</button>
+      <button role="tab" id="tab-tempo-real" data-aba="tempo-real" aria-controls="tempo-real"><span class="n">2</span>Tempo real</button>
+      <button role="tab" id="tab-precaucoes" data-aba="precaucoes" aria-controls="precaucoes"><span class="n">3</span>Precauções</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- 1 · PESQUISAR -->
+  <section class="aba" id="pesquisar" role="tabpanel" aria-labelledby="tab-pesquisar">
+    <h2>Que evento climático aparece nesta imagem?</h2>
+    <p class="intro">Envie uma foto. A rede neural da Belka compara a imagem com o que aprendeu e diz qual evento ela mais parece mostrar.</p>
+    <div class="grade duas">
+      <div>
+        <div class="solta" id="solta">
+          <input type="file" id="arquivo" accept="image/*" aria-label="Escolher imagem">
+          <div id="solta-vazia">
+            <p class="rotulo">Imagem</p>
+            <p><strong>Arraste uma foto para cá</strong><br>ou clique para escolher do computador</p>
+            <p class="mudo peq">JPG, PNG ou WebP. A imagem não sai do seu computador.</p>
+          </div>
+          <img id="previa" alt="Imagem enviada" hidden>
+        </div>
+      </div>
+      <div class="cartao resultado" id="resultado" aria-live="polite">
+        <p class="rotulo">Resultado</p>
+        <p class="mudo" style="margin-top:8px">O resultado aparece aqui depois que você enviar uma imagem.</p>
+      </div>
+    </div>
+    <details id="sobre-modelo">
+      <summary>Como o modelo foi treinado e testado</summary>
+      <div class="cartao" id="ficha-modelo"></div>
+    </details>
+  </section>
+
+  <!-- 2 · TEMPO REAL -->
+  <section class="aba" id="tempo-real" role="tabpanel" aria-labelledby="tab-tempo-real" hidden>
+    <h2>Há algum evento climático previsto para a sua cidade?</h2>
+    <p class="intro">Avisos meteorológicos e previsão vindos direto do INMET, o Instituto Nacional de Meteorologia. Escolha o lugar e atualize quando quiser.</p>
+    <div class="cartao">
+      <div class="filtros">
+        <div class="campo"><label class="rotulo" for="uf">Estado</label><select id="uf"></select></div>
+        <div class="campo"><label class="rotulo" for="busca-mun">Filtrar cidade</label><input id="busca-mun" type="search" placeholder="Digite parte do nome" autocomplete="off"></div>
+        <div class="campo"><label class="rotulo" for="mun">Cidade</label><select id="mun"></select></div>
+        <button class="btn" id="atualizar" type="button">Atualizar</button>
+      </div>
+      <p class="status mudo peq" id="status" aria-live="polite"></p>
+    </div>
+    <div id="tr-conteudo" style="margin-top:20px"></div>
+  </section>
+
+  <!-- 3 · PRECAUÇÕES -->
+  <section class="aba" id="precaucoes" role="tabpanel" aria-labelledby="tab-precaucoes" hidden>
+    <h2>O que fazer em cada evento</h2>
+    <p class="intro">Escolha o evento e o nível do alerta para ver as precauções. Cada nível já diz a atitude esperada.</p>
+    <p class="rotulo">Evento</p>
+    <div class="chips" id="chips-evento" role="group" aria-label="Filtrar por evento"></div>
+    <p class="rotulo">Nível</p>
+    <div class="chips" id="chips-nivel" role="group" aria-label="Filtrar por nível"></div>
+    <div id="lista-precaucoes"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="tel"><span>Defesa Civil <b>199</b></span><span>Bombeiros <b>193</b></span><span>SAMU <b>192</b></span></div>
+    <p>A Belka não substitui os canais oficiais. Ela aproxima o aviso de você, em linguagem simples e com o próximo passo claro. Dados de tempo: INMET. Cidades: IBGE.</p>
+  </div>
+</footer>
+
+<script src="precaucoes.js"></script>
+<script src="belkanet.js"></script>
+<script src="modelo.js" onerror="window.BELKA_MODELO=null"></script>
+<script>
+"use strict";
+const EV = window.BELKA_EVENTOS, NV = window.BELKA_NIVEIS, MODELO = window.BELKA_MODELO || null;
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const guardar = (k, v) => { try { localStorage.setItem("belka." + k, v); } catch (e) {} };
+const ler = k => { try { return localStorage.getItem("belka." + k); } catch (e) { return null; } };
+
+/* ---------- ícones ---------- */
+const svg = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const ICO = {
+  enchente: svg('<path d="M3 17c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 21c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M5 13V8l7-5 7 5v5"/>'),
+  deslizamento: svg('<path d="M3 20h18"/><path d="M3 20 11 5l4 6"/><circle cx="16" cy="15" r="1.6"/><circle cx="19.5" cy="18" r="1.2"/><circle cx="12.5" cy="17.5" r="1"/>'),
+  incendio: svg('<path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-9z"/>'),
+  tempestade: svg('<path d="M7 15a4 4 0 0 1 .5-8 5.5 5.5 0 0 1 10.5 1.5A3.5 3.5 0 0 1 18 15"/><path d="m13 12-3 5h4l-3 5"/>'),
+  vendaval: svg('<path d="M3 8h10a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h7"/>'),
+  granizo: svg('<path d="M7 14a4 4 0 0 1 .5-8 5.5 5.5 0 0 1 10.5 1.5A3.5 3.5 0 0 1 18 14"/><circle cx="8" cy="18.5" r="1.3"/><circle cx="12.5" cy="20" r="1.3"/><circle cx="16.5" cy="18" r="1.3"/>'),
+  calor: svg('<circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/>'),
+  seca: svg('<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/><path d="M4 4l16 16"/>'),
+  frio: svg('<path d="M12 2v20M3.5 7l17 10M20.5 7l-17 10"/><path d="m9 4 3 2.5L15 4M9 20l3-2.5 3 2.5"/>'),
+  fique_de_olho: svg('<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>'),
+  prepare_se: svg('<path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17v.01"/>'),
+  aja_agora: svg('<circle cx="12" cy="12" r="9"/><path d="M8 12h8M13 8l4 4-4 4"/>'),
+  depois: svg('<path d="m4 12 5 5L20 6"/>'),
+  neutro: svg('<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/>')
+};
+const selo = n => `<span class="nivel ${n}">${ICO[n] || ""}${esc(n === "neutro" ? "Sinal na previsão" : NV[n].nome)}</span>`;
+
+/* ---------- abas ---------- */
+const ABAS = ["pesquisar", "tempo-real", "precaucoes"];
+function mostrarAba(nome, semHash) {
+  if (!ABAS.includes(nome)) nome = "pesquisar";
+  ABAS.forEach(a => { $(a).hidden = a !== nome; $("tab-" + a).setAttribute("aria-selected", a === nome); });
+  if (!semHash && location.hash !== "#" + nome) history.replaceState(null, "", "#" + nome);
+  if (nome === "tempo-real") iniciarTempoReal();
+}
+document.querySelectorAll("nav button").forEach(b => b.addEventListener("click", () => mostrarAba(b.dataset.aba)));
+window.addEventListener("hashchange", () => mostrarAba(location.hash.slice(1), true));
+
+/* =====================================================================
+   1 · PESQUISAR — classificação da imagem com a BelkaNet
+   ===================================================================== */
+const LIMIAR = 0.45;   // abaixo disso, a Belka diz que não tem certeza
+const rede = MODELO ? window.BelkaNet.criar(MODELO) : null;
+const nomeClasse = c => { const e = EV[window.BELKA_CLASSE_PARA_EVENTO[c] || c]; return e ? e.nome : c; };
+
+function imagemParaRGBA(img) {
+  // mesmo pré-processamento do treino: lado menor -> 72 px, recorte central 72x72, depois o centro 64x64
+  const B = MODELO.tam_base, T = MODELO.tam, s = B / Math.min(img.naturalWidth, img.naturalHeight);
+  let w = img.naturalWidth, h = img.naturalHeight, fonte = img;
+  // reduz pela metade em etapas para não perder qualidade em fotos grandes
+  while (Math.min(w, h) / 2 >= B) {
+    const c = document.createElement("canvas"); w = Math.round(w / 2); h = Math.round(h / 2); c.width = w; c.height = h;
+    const g = c.getContext("2d"); g.imageSmoothingQuality = "high"; g.drawImage(fonte, 0, 0, w, h); fonte = c;
+  }
+  const W2 = Math.max(B, Math.round(img.naturalWidth * s)), H2 = Math.max(B, Math.round(img.naturalHeight * s));
+  const c = document.createElement("canvas"); c.width = B; c.height = B;
+  const g = c.getContext("2d", { willReadFrequently: true }); g.imageSmoothingQuality = "high";
+  g.drawImage(fonte, -Math.floor((W2 - B) / 2), -Math.floor((H2 - B) / 2), W2, H2);
+  const o = (B - T) / 2;
+  return g.getImageData(o, o, T, T).data;
+}
+
+function mostrarResultado(ranking) {
+  const topo = ranking[0], ev = window.BELKA_CLASSE_PARA_EVENTO[topo.classe] || topo.classe, certo = topo.prob >= LIMIAR;
+  const barras = ranking.map((r, i) => `<div class="barra ${i === 0 ? "topo-1" : ""}"><span>${esc(nomeClasse(r.classe))}</span><span class="trilho"><span class="cheio" style="display:block;width:${(r.prob * 100).toFixed(1)}%"></span></span><span class="pc">${Math.round(r.prob * 100)}%</span></div>`).join("");
+  $("resultado").innerHTML = `<p class="rotulo">Resultado</p>` + (certo
+    ? `<h3>${esc(nomeClasse(topo.classe))}</h3><p>A imagem se parece com este evento, com ${Math.round(topo.prob * 100)}% de confiança.</p>`
+    : `<h3>Não deu para ter certeza</h3><p>O palpite mais forte é ${esc(nomeClasse(topo.classe).toLowerCase())}, mas com só ${Math.round(topo.prob * 100)}% de confiança. Tente uma foto mais nítida ou mais aberta.</p>`)
+    + `<div class="barras">${barras}</div>
+       <div class="linha" style="margin-top:16px">
+         ${EV[ev] ? `<button class="btn" type="button" id="ir-prec">Ver precauções</button>` : ""}
+         <button class="btn sec" type="button" id="ir-tr">Conferir avisos oficiais</button>
+       </div>
+       <p class="mudo peq" style="margin-top:14px">Este resultado vem só da imagem. Para saber se há risco na sua cidade, confira os avisos oficiais na aba Tempo real.</p>`;
+  if ($("ir-prec")) $("ir-prec").onclick = () => { filtro.evento = ev; filtro.nivel = "todos"; desenharPrecaucoes(); mostrarAba("precaucoes"); };
+  $("ir-tr").onclick = () => mostrarAba("tempo-real");
+}
+
+function receberArquivo(arq) {
+  if (!arq || !arq.type.startsWith("image/")) { $("resultado").innerHTML = `<p class="rotulo">Resultado</p><p style="margin-top:8px">Esse arquivo não é uma imagem. Escolha um JPG, PNG ou WebP.</p>`; return; }
+  const url = URL.createObjectURL(arq), img = $("previa");
+  img.onload = () => {
+    $("solta-vazia").hidden = true; img.hidden = false;
+    if (!rede) { $("resultado").innerHTML = `<p class="rotulo">Resultado</p><h3 style="font-size:1.3rem">O modelo ainda não foi treinado</h3><p>Rode os dois passos da pasta <code>cnn/</code> (veja o README) para gerar o arquivo <code>dashboard/modelo.js</code> e recarregue esta página.</p>`; return; }
+    $("resultado").innerHTML = `<p class="rotulo">Resultado</p><p style="margin-top:8px">Analisando a imagem…</p>`;
+    setTimeout(() => { try { mostrarResultado(rede.classificarRGBA(imagemParaRGBA(img))); } catch (e) { $("resultado").innerHTML = `<p class="rotulo">Resultado</p><p style="margin-top:8px">Não consegui ler esta imagem. Tente outra.</p>`; } }, 30);
+  };
+  img.onerror = () => { $("resultado").innerHTML = `<p class="rotulo">Resultado</p><p style="margin-top:8px">Não consegui abrir esta imagem. Tente outra.</p>`; };
+  img.src = url;
+}
+$("arquivo").addEventListener("change", e => receberArquivo(e.target.files[0]));
+const solta = $("solta");
+["dragenter", "dragover"].forEach(t => solta.addEventListener(t, e => { e.preventDefault(); solta.classList.add("sobre"); }));
+["dragleave", "drop"].forEach(t => solta.addEventListener(t, e => { e.preventDefault(); solta.classList.remove("sobre"); }));
+solta.addEventListener("drop", e => receberArquivo(e.dataTransfer.files[0]));
+
+function desenharFichaModelo() {
+  const el = $("ficha-modelo");
+  if (!MODELO) { el.innerHTML = `<p>O modelo ainda não foi treinado. Siga os passos 1 e 2 do README para coletar as imagens e treinar a rede.</p>`; return; }
+  const t = MODELO.teste, pc = v => (v * 100).toFixed(1).replace(".", ",") + "%";
+  const linhas = MODELO.classes.map(c => { const m = t.por_classe[c]; return `<tr><td>${esc(nomeClasse(c))}</td><td class="num">${MODELO.imagens.por_classe[c]}</td><td class="num">${m.n}</td><td class="num">${pc(m.precisao)}</td><td class="num">${pc(m.recall)}</td><td class="num">${pc(m.f1)}</td></tr>`; }).join("");
+  const max = Math.max(1, ...t.matriz_confusao.flat());
+  const mc = t.matriz_confusao.map((l, i) => `<tr><th scope="row">${esc(nomeClasse(MODELO.classes[i]))}</th>${l.map((v, j) => `<td style="background:rgba(47,95,208,${(v / max * .85).toFixed(2)});color:${v / max > .5 ? "#fff" : "inherit"};${i === j ? "font-weight:700" : ""}">${v}</td>`).join("")}</tr>`).join("");
+  el.innerHTML = `
+    <p><strong>${esc(MODELO.nome)}</strong> é uma rede neural convolucional com ${MODELO.canais.length} blocos de convolução 3×3 (${MODELO.canais.join(", ")} filtros), <em>global average pooling</em> e classificador softmax, no espírito da MeteCNN de Xiao et al. (2021). Tem ${MODELO.parametros.toLocaleString("pt-BR")} parâmetros e recebe imagens de ${MODELO.tam}×${MODELO.tam} pixels.</p>
+    <p style="margin-top:8px">Foi treinada com ${MODELO.imagens.total.toLocaleString("pt-BR")} fotos em domínio público de órgãos do governo dos EUA (FEMA, NOAA, USGS, Serviço Florestal e outros), divididas em treino, validação e teste na proporção 8:1:1 (${MODELO.imagens.treino} / ${MODELO.imagens.validacao} / ${MODELO.imagens.teste}). Treino em ${esc(MODELO.treinado_em)}.</p>
+    <div class="numeros">
+      <div class="numero"><span class="rotulo">Acurácia no teste</span><b>${pc(t.acuracia)}</b></div>
+      <div class="numero"><span class="rotulo">Precisão macro</span><b>${pc(t.macro_precisao)}</b></div>
+      <div class="numero"><span class="rotulo">Recall macro</span><b>${pc(t.macro_recall)}</b></div>
+      <div class="numero"><span class="rotulo">F1 macro</span><b>${pc(t.macro_f1)}</b></div>
+    </div>
+    <div class="rolagem"><table><thead><tr><th>Evento</th><th class="num">Imagens</th><th class="num">No teste</th><th class="num">Precisão</th><th class="num">Recall</th><th class="num">F1</th></tr></thead><tbody>${linhas}</tbody></table></div>
+    <h3 style="margin:20px 0 4px">Matriz de confusão do teste</h3>
+    <p class="mudo peq">Linhas: evento verdadeiro. Colunas: evento previsto, na mesma ordem das linhas.</p>
+    <div class="rolagem"><table class="mc"><tbody>${mc}</tbody></table></div>`;
+}
+
+/* =====================================================================
+   2 · TEMPO REAL — API do INMET (avisos, previsão, estação) + IBGE (cidades)
+   ===================================================================== */
+const INMET = "https://apiprevmet3.inmet.gov.br", IBGE = "https://servicodados.ibge.gov.br/api/v1/localidades";
+let municipios = [], avisosCache = null, trIniciado = false, timer = null;
+
+async function json(url) {
+  const r = await fetch(url, { cache: "no-store" });
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  return r.json();
+}
+
+// evento do INMET -> eventos da base Belka
+function eventosDoAviso(desc) {
+  const d = (desc || "").toLowerCase();
+  if (/tempestade/.test(d)) return ["tempestade", "enchente"];
+  if (/granizo/.test(d)) return ["granizo", "tempestade"];
+  if (/chuva|acumulado/.test(d)) return ["enchente", "deslizamento"];
+  if (/vendaval|vento|ciclone|tornado/.test(d)) return ["vendaval"];
+  if (/calor/.test(d)) return ["calor"];
+  if (/umidade|seca|estiagem/.test(d)) return ["seca", "incendio"];
+  if (/inc[êe]ndio|queimada/.test(d)) return ["incendio"];
+  if (/geada|frio|friagem|neve|decl[íi]nio/.test(d)) return ["frio"];
+  return [];
+}
+function nivelDoAviso(sev) {
+  const s = (sev || "").toLowerCase();
+  return /grande/.test(s) ? "aja_agora" : /potencial/.test(s) ? "fique_de_olho" : "prepare_se";
+}
+const ORDEM = { aja_agora: 0, prepare_se: 1, fique_de_olho: 2 };
+
+function hojeBR() { return new Intl.DateTimeFormat("en-CA", { timeZone: "America/Sao_Paulo" }).format(new Date()); }
+function quando(inicio, fim) {
+  const f = s => { const [d, h] = String(s).split(" "); const [y, m, dia] = d.split("-").map(Number); const hoje = hojeBR();
+    const dt = new Date(Date.UTC(y, m - 1, dia)), am = new Date(Date.UTC(...hoje.split("-").map((v, i) => i === 1 ? v - 1 : +v))); const dif = Math.round((dt - am) / 864e5);
+    const rot = dif === 0 ? "hoje" : dif === 1 ? "amanhã" : dif === -1 ? "ontem" : ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"][dt.getUTCDay()] + ", " + String(dia).padStart(2, "0") + "/" + String(m).padStart(2, "0");
+    return { rot, h: (h || "").replace(":", "h").replace(/h00$/, "h") }; };
+  const a = f(inicio), b = f(fim);
+  return a.rot === b.rot ? `${a.rot}, das ${a.h} às ${b.h}` : `de ${a.rot} às ${a.h} até ${b.rot} às ${b.h}`;
+}
+
+function cartaoAviso(a, cidade) {
+  const nv = nivelDoAviso(a.severidade), evs = eventosDoAviso(a.descricao), principal = evs[0];
+  const belka = principal && EV[principal] ? EV[principal][nv].slice(0, 3) : [];
+  const riscos = (a.riscos || []).map(r => `<li>${esc(r.trim())}</li>`).join("");
+  const instr = (a.instrucoes || []).map(r => `<li>${esc(r.trim())}</li>`).join("");
+  return `<article class="cartao aviso ${nv}">
+    ${selo(nv)}
+    <h3>${esc(a.descricao)} em ${esc(cidade)}</h3>
+    <p class="quando">Quando: ${esc(quando(a.inicio, a.fim))}</p>
+    <p class="mudo peq">Aviso do INMET · ${esc(a.severidade)}</p>
+    ${riscos ? `<div class="sub"><p class="rotulo">O que pode acontecer</p><ul>${riscos}</ul></div>` : ""}
+    ${belka.length ? `<div class="sub"><p class="rotulo">O que fazer agora</p><ul>${belka.map(p => `<li>${esc(p)}</li>`).join("")}</ul></div>` : ""}
+    ${instr ? `<div class="sub"><p class="rotulo">Instruções do INMET</p><ul>${instr}</ul></div>` : ""}
+    ${evs.filter(e => EV[e]).length ? `<div class="linha sub">${evs.filter(e => EV[e]).map(e => `<button class="btn sec" type="button" data-prec="${e}" data-nivel="${nv}">Precauções: ${esc(EV[e].nome.toLowerCase())}</button>`).join("")}</div>` : ""}
+  </article>`;
+}
+
+// sinais tirados da previsão, quando não há aviso oficial
+function sinaisDaPrevisao(dias) {
+  const s = new Map();
+  dias.slice(0, 3).forEach(d => {
+    const txt = d.resumos.join(" ").toLowerCase();
+    if (/tempestade|trovoada/.test(txt)) s.set("tempestade", `Previsão de trovoadas ${d.rot}.`);
+    else if (/chuva forte|pancadas/.test(txt) && !s.has("enchente")) s.set("enchente", `Previsão de pancadas de chuva ${d.rot}.`);
+    if (d.max >= 35 && !s.has("calor")) s.set("calor", `Máxima de ${d.max} °C ${d.rot}.`);
+    if (d.min <= 5 && !s.has("frio")) s.set("frio", `Mínima de ${d.min} °C ${d.rot}.`);
+    if (d.umid != null && d.umid <= 30 && !s.has("seca")) s.set("seca", `Umidade do ar pode cair a ${d.umid}% ${d.rot}.`);
+  });
+  return [...s].map(([ev, texto]) => ({ ev, texto }));
+}
+
+function lerPrevisao(p, geo) {
+  const base = p && p[geo]; if (!base) return [];
+  const hoje = hojeBR();
+  return Object.keys(base).map(data => {
+    const o = base[data], partes = o.manha ? [o.manha, o.tarde, o.noite].filter(Boolean) : [o];
+    const [dd, mm, yy] = data.split("/").map(Number), iso = `${yy}-${String(mm).padStart(2, "0")}-${String(dd).padStart(2, "0")}`;
+    const dif = Math.round((Date.parse(iso) - Date.parse(hoje)) / 864e5), dt = new Date(Date.UTC(yy, mm - 1, dd));
+    const num = k => partes.map(x => Number(x[k])).filter(v => !isNaN(v));
+    const um = num("umidade_min");
+    return { iso, dif, rot: dif === 0 ? "hoje" : dif === 1 ? "amanhã" : ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado"][dt.getUTCDay()],
+      resumos: [...new Set(partes.map(x => x.resumo).filter(Boolean))], max: Math.max(...num("temp_max")), min: Math.min(...num("temp_min")), umid: um.length ? Math.min(...um) : null };
+  }).filter(d => d.dif >= 0).sort((a, b) => a.iso < b.iso ? -1 : 1);
+}
+
+async function carregarTempoReal(forcar) {
+  const geo = $("mun").value, sel = $("mun").selectedOptions[0];
+  if (!geo || !sel) return;
+  const cidade = sel.textContent, uf = $("uf").value, alvo = $("tr-conteudo");
+  $("status").textContent = "Buscando dados do INMET…"; $("atualizar").disabled = true;
+  guardar("uf", uf); guardar("mun", geo);
+  try {
+    if (forcar || !avisosCache || Date.now() - avisosCache.t > 5 * 60e3) avisosCache = { t: Date.now(), d: await json(INMET + "/avisos/ativos") };
+    const [prev, est] = await Promise.allSettled([json(INMET + "/previsao/" + geo), json(INMET + "/estacao/proxima/" + geo)]);
+    if ($("mun").value !== geo) return;   // a pessoa trocou de cidade enquanto carregava
+    const todos = [].concat(avisosCache.d.hoje || [], avisosCache.d.futuro || []);
+    const meus = todos.filter(a => String(a.geocodes || "").split(",").includes(String(geo)) && !a.encerrado)
+      .sort((a, b) => ORDEM[nivelDoAviso(a.severidade)] - ORDEM[nivelDoAviso(b.severidade)] || String(a.inicio).localeCompare(String(b.inicio)));
+    const dias = prev.status === "fulfilled" ? lerPrevisao(prev.value, geo) : [];
+    const sinais = meus.length ? [] : sinaisDaPrevisao(dias);
+
+    let h = "";
+    if (meus.length) {
+      const nomes = [...new Set(meus.map(a => a.descricao.toLowerCase()))];
+      h += `<p class="resposta">Sim. ${meus.length === 1 ? "Há 1 aviso" : "Há " + meus.length + " avisos"} para ${esc(cidade)}: ${esc(nomes.join(", "))}.</p>`;
+      h += meus.map(a => cartaoAviso(a, cidade)).join("");
+    } else if (sinais.length) {
+      h += `<p class="resposta">Nenhum aviso oficial para ${esc(cidade)} agora, mas a previsão pede atenção.</p>`;
+      h += sinais.map(s => `<article class="cartao aviso neutro">${selo("neutro")}<h3>${esc(EV[s.ev].nome)}</h3><p>${esc(s.texto)} Ainda não é um aviso do INMET.</p>
+        <div class="sub"><p class="rotulo">Por precaução</p><ul>${EV[s.ev].fique_de_olho.slice(0, 3).map(p => `<li>${esc(p)}</li>`).join("")}</ul></div>
+        <div class="linha sub"><button class="btn sec" type="button" data-prec="${s.ev}" data-nivel="todos">Precauções: ${esc(EV[s.ev].nome.toLowerCase())}</button></div></article>`).join("");
+    } else {
+      h += `<p class="resposta">Não. Nenhum evento climático previsto para ${esc(cidade)} nos próximos dias.</p>
+            <div class="cartao aviso"><p>O INMET não tem aviso ativo para a cidade. Vale conferir de novo mais tarde: os avisos são atualizados ao longo do dia.</p></div>`;
+    }
+
+    if (est.status === "fulfilled" && est.value && est.value.dados) {
+      const d = est.value.dados, e = est.value.estacao || {}, n = v => (v == null || v === "" || isNaN(Number(v))) ? "–" : String(Math.round(Number(v) * 10) / 10).replace(".", ",");
+      const hora = d.HR_MEDICAO ? String((Number(String(d.HR_MEDICAO).slice(0, 2)) + 21) % 24).padStart(2, "0") + "h" : "";
+      h += `<div class="cartao" style="margin-bottom:16px"><p class="rotulo">Agora na estação mais próxima</p>
+        <div class="agora" style="margin-top:8px"><div><b>${n(d.TEM_INS)} °C</b>temperatura</div><div><b>${n(d.UMD_INS)}%</b>umidade do ar</div><div><b>${n(d.CHUVA)} mm</b>chuva na última hora</div><div><b>${n(Number(d.VEN_RAJ) * 3.6)} km/h</b>rajada de vento</div></div>
+        <p class="mudo peq" style="margin-top:8px">Estação ${esc(e.NOME || d.DC_NOME || "")}${e.DISTANCIA_EM_KM ? ", a " + esc(e.DISTANCIA_EM_KM) + " km" : ""}${hora ? " · medição das " + hora : ""}</p></div>`;
+    }
+    if (dias.length) {
+      h += `<div class="cartao"><p class="rotulo">Previsão do INMET</p><div class="dias" style="margin-top:10px">${dias.slice(0, 5).map(d => `<div class="dia"><b>${esc(d.rot.charAt(0).toUpperCase() + d.rot.slice(1))}</b><div class="t">${isFinite(d.min) ? d.min : "–"}° / ${isFinite(d.max) ? d.max : "–"}°</div><div class="peq">${esc(d.resumos[d.resumos.length > 1 ? 1 : 0] || "")}</div></div>`).join("")}</div></div>`;
+    }
+    const noEstado = todos.filter(a => !a.encerrado && String(a.geocodes || "").split(",").some(g => g.slice(0, 2) === String(geo).slice(0, 2)));
+    const cont = { aja_agora: 0, prepare_se: 0, fique_de_olho: 0 }; noEstado.forEach(a => cont[nivelDoAviso(a.severidade)]++);
+    h += `<div class="cartao" style="margin-top:16px"><p class="rotulo">Avisos ativos em ${esc(uf)}</p><div class="linha" style="margin-top:10px">${Object.keys(cont).map(k => `${selo(k)} <strong style="font-family:var(--titulo);font-size:1.2rem;margin-right:14px">${cont[k]}</strong>`).join("")}</div></div>`;
+
+    alvo.innerHTML = h;
+    alvo.querySelectorAll("[data-prec]").forEach(b => b.onclick = () => { filtro.evento = b.dataset.prec; filtro.nivel = b.dataset.nivel; desenharPrecaucoes(); mostrarAba("precaucoes"); window.scrollTo(0, 0); });
+    $("status").textContent = "Atualizado às " + new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }) + ". Fonte: INMET. A página se atualiza sozinha a cada 10 minutos.";
+  } catch (e) {
+    alvo.innerHTML = `<div class="cartao aviso"><h3 style="margin-top:0">Não consegui falar com o INMET</h3><p>Verifique a internet e clique em Atualizar. Enquanto isso, os avisos oficiais estão em <a href="https://alertas2.inmet.gov.br/" target="_blank" rel="noopener">alertas2.inmet.gov.br</a>.</p></div>`;
+    $("status").textContent = "Sem resposta do INMET (" + e.message + ").";
+  } finally { $("atualizar").disabled = false; }
+}
+
+function preencherMunicipios(manter) {
+  const termo = $("busca-mun").value.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  const lista = municipios.filter(m => !termo || m.chave.includes(termo));
+  $("mun").innerHTML = lista.map(m => `<option value="${m.id}">${esc(m.nome)}</option>`).join("") || `<option value="">Nenhuma cidade encontrada</option>`;
+  if (manter && lista.some(m => String(m.id) === String(manter))) $("mun").value = manter;
+}
+async function carregarMunicipios(uf, preferido) {
+  $("status").textContent = "Carregando cidades…";
+  const d = await json(`${IBGE}/estados/${uf}/municipios?orderBy=nome`);
+  municipios = d.map(m => ({ id: m.id, nome: m.nome, chave: m.nome.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "") }));
+  $("busca-mun").value = ""; preencherMunicipios(preferido);
+}
+async function iniciarTempoReal() {
+  if (trIniciado) return; trIniciado = true;
+  try {
+    const ufs = (await json(IBGE + "/estados?orderBy=nome")).map(u => u.sigla).sort();
+    const uf = ler("uf") && ufs.includes(ler("uf")) ? ler("uf") : "SP";
+    $("uf").innerHTML = ufs.map(u => `<option>${u}</option>`).join(""); $("uf").value = uf;
+    await carregarMunicipios(uf, ler("mun") || "3550308");
+    await carregarTempoReal(false);
+  } catch (e) { trIniciado = false; $("status").textContent = "Não consegui carregar a lista de cidades do IBGE. Verifique a internet e abra a aba de novo."; }
+  $("uf").onchange = async () => { try { await carregarMunicipios($("uf").value); carregarTempoReal(false); } catch (e) { $("status").textContent = "Não consegui carregar as cidades deste estado."; } };
+  $("mun").onchange = () => carregarTempoReal(false);
+  $("busca-mun").oninput = () => { const antes = $("mun").value; preencherMunicipios(antes); if ($("mun").value !== antes) carregarTempoReal(false); };
+  $("atualizar").onclick = () => carregarTempoReal(true);
+  clearInterval(timer); timer = setInterval(() => { if (!$("tempo-real").hidden) carregarTempoReal(true); }, 10 * 60e3);
+}
+
+/* =====================================================================
+   3 · PRECAUÇÕES — filtro por evento e por nível
+   ===================================================================== */
+const filtro = { evento: "todos", nivel: "todos" };
+const NIVEIS_ORDEM = ["fique_de_olho", "prepare_se", "aja_agora", "depois"];
+function desenharPrecaucoes() {
+  $("chips-evento").innerHTML = `<button class="chip" data-e="todos" aria-pressed="${filtro.evento === "todos"}">Todos</button>` +
+    Object.keys(EV).map(k => `<button class="chip" data-e="${k}" aria-pressed="${filtro.evento === k}">${ICO[k]}${esc(EV[k].nome)}</button>`).join("");
+  $("chips-nivel").innerHTML = `<button class="chip" data-n="todos" aria-pressed="${filtro.nivel === "todos"}">Todos</button>` +
+    NIVEIS_ORDEM.map(n => `<button class="chip" data-n="${n}" aria-pressed="${filtro.nivel === n}">${ICO[n]}${esc(NV[n].nome)}</button>`).join("");
+  const evs = filtro.evento === "todos" ? Object.keys(EV) : [filtro.evento], nvs = filtro.nivel === "todos" ? NIVEIS_ORDEM : [filtro.nivel];
+  $("lista-precaucoes").innerHTML = evs.map(k => { const e = EV[k]; return `<article class="cartao evento">
+      <div class="cab"><div class="ico">${ICO[k]}</div><div><h3 style="font-size:1.35rem">${esc(e.nome)}</h3><p>${esc(e.oque)}</p></div></div>
+      <p class="rotulo" style="margin-top:12px">Sinais de que pode acontecer</p><div class="sinais">${e.sinais.map(s => `<span>${esc(s)}</span>`).join("")}</div>
+      <div class="niveis ${nvs.length > 1 ? "varias" : ""}">${nvs.map(n => `<div class="bloco">${selo(n)}<p class="mudo peq" style="margin-top:8px">${NV[n].inmet ? "Equivale ao “" + NV[n].inmet.toLowerCase() + "” do INMET. " : ""}${esc(NV[n].resumo)}</p><ol class="passos">${e[n].map(p => `<li>${esc(p)}</li>`).join("")}</ol></div>`).join("")}</div>
+    </article>`; }).join("");
+  $("chips-evento").querySelectorAll("button").forEach(b => b.onclick = () => { filtro.evento = b.dataset.e; desenharPrecaucoes(); });
+  $("chips-nivel").querySelectorAll("button").forEach(b => b.onclick = () => { filtro.nivel = b.dataset.n; desenharPrecaucoes(); });
+}
+
+/* ---------- início ---------- */
+desenharFichaModelo();
+desenharPrecaucoes();
+mostrarAba(location.hash.slice(1) || "pesquisar", true);
+</script>
+</body>
+</html>
